@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MeasurementRepository extends JpaRepository<Measurement, Integer> {
+    Integer countByRainingTrue();
 }

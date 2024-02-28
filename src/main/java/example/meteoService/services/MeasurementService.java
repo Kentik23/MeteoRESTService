@@ -26,6 +26,10 @@ public class MeasurementService {
         return measurementRepository.findAll();
     }
 
+    public int getRainyDaysCount() {
+        return measurementRepository.countByRainingTrue();
+    }
+
     @Transactional
     public void add(Measurement measurement) {
         measurement.setMeasurementDate(new Date());

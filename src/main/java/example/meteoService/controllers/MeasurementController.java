@@ -3,6 +3,7 @@ package example.meteoService.controllers;
 import example.meteoService.dto.MeasurementDTO;
 import example.meteoService.dto.SensorDTO;
 import example.meteoService.models.Measurement;
+import example.meteoService.models.Sensor;
 import example.meteoService.services.MeasurementService;
 import example.meteoService.util.MeasurementDTOValidator;
 import example.meteoService.util.MeasurementErrorResponse;
@@ -38,6 +39,11 @@ public class MeasurementController {
         return measurementService.findAll().stream().map(this::convertToMeasurementDTO).collect(Collectors.toList());
     }
 
+    @GetMapping("/rainyDaysCount")
+    public int getRainyDaysCount() {
+        return measurementService.getRainyDaysCount();
+    }
+
     @PostMapping("/add")
     public ResponseEntity<HttpStatus> register(@RequestBody @Valid MeasurementDTO measurementDTO, BindingResult bindingResult) {
 
@@ -70,7 +76,9 @@ public class MeasurementController {
     }
 
     private Measurement convertToMeasurement(MeasurementDTO measurementDTO) {
-        return modelMapper.map(measurementDTO, Measurement.class);
+        Measurement measurement = modelMapper.map(measurementDTO, Measurement.class);
+        measurement.setSensor(modelMapper.map(measurementDTO.getSensorDTO(), Sensor.class));
+        return measurement;
     }
 
     private MeasurementDTO convertToMeasurementDTO(Measurement measurement) {
