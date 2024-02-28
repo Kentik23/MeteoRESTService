@@ -1,6 +1,5 @@
 package example.meteoService.dto;
 
-import example.meteoService.models.Sensor;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Pattern;
 
@@ -11,7 +10,7 @@ public class MeasurementDTO {
 //    @Pattern(regexp = "^(true|false)$", message = "Должно принимать значение true или false")
     private boolean raining;
 
-    private Sensor sensor;
+    private SensorDTO sensorDTO;
 
     public MeasurementDTO() {
     }
@@ -32,11 +31,11 @@ public class MeasurementDTO {
         this.raining = raining;
     }
 
-    public Sensor getSensor() {
-        return sensor;
+    public SensorDTO getSensorDTO() {
+        return sensorDTO;
     }
 
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
+    public void setSensorDTO(SensorDTO sensorDTO) {
+        this.sensorDTO = sensorDTO;
     }
 }

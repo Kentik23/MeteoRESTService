@@ -1,6 +1,7 @@
 package example.meteoService.controllers;
 
 import example.meteoService.dto.MeasurementDTO;
+import example.meteoService.dto.SensorDTO;
 import example.meteoService.models.Measurement;
 import example.meteoService.services.MeasurementService;
 import example.meteoService.util.MeasurementDTOValidator;
@@ -16,6 +17,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("measurements")
@@ -31,7 +33,12 @@ public class MeasurementController {
         this.measurementDTOValidator = measurementDTOValidator;
     }
 
-    @PostMapping
+    @GetMapping
+    public List<MeasurementDTO> getAllMeasurements() {
+        return measurementService.findAll().stream().map(this::convertToMeasurementDTO).collect(Collectors.toList());
+    }
+
+    @PostMapping("/add")
     public ResponseEntity<HttpStatus> register(@RequestBody @Valid MeasurementDTO measurementDTO, BindingResult bindingResult) {
 
         measurementDTOValidator.validate(measurementDTO, bindingResult);
@@ -64,5 +71,11 @@ public class MeasurementController {
 
     private Measurement convertToMeasurement(MeasurementDTO measurementDTO) {
         return modelMapper.map(measurementDTO, Measurement.class);
+    }
+
+    private MeasurementDTO convertToMeasurementDTO(Measurement measurement) {
+        MeasurementDTO measurementDTO = modelMapper.map(measurement, MeasurementDTO.class);
+        measurementDTO.setSensorDTO(modelMapper.map(measurement.getSensor(), SensorDTO.class));
+        return measurementDTO;
     }
 }

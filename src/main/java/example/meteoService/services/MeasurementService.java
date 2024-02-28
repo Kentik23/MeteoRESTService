@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,6 +20,10 @@ public class MeasurementService {
     public MeasurementService(MeasurementRepository measurementRepository, SensorRepository sensorRepository) {
         this.measurementRepository = measurementRepository;
         this.sensorRepository = sensorRepository;
+    }
+
+    public List<Measurement> findAll() {
+        return measurementRepository.findAll();
     }
 
     @Transactional
