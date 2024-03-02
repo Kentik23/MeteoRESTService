@@ -77,13 +77,13 @@ public class MeasurementController {
 
     private Measurement convertToMeasurement(MeasurementDTO measurementDTO) {
         Measurement measurement = modelMapper.map(measurementDTO, Measurement.class);
-        measurement.setSensor(modelMapper.map(measurementDTO.getSensorDTO(), Sensor.class));
+        measurement.setSensor(modelMapper.map(measurementDTO.getSensor(), Sensor.class));
         return measurement;
     }
 
     private MeasurementDTO convertToMeasurementDTO(Measurement measurement) {
         MeasurementDTO measurementDTO = modelMapper.map(measurement, MeasurementDTO.class);
-        measurementDTO.setSensorDTO(modelMapper.map(measurement.getSensor(), SensorDTO.class));
+        measurementDTO.setSensor(modelMapper.map(measurement.getSensor(), SensorDTO.class));
         return measurementDTO;
     }
 }
